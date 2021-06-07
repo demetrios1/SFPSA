@@ -1,15 +1,7 @@
 ## Introduction and usage
-
+This code implements the methods from the paper Do forecasts of bankruptcy cause bankruptcy? A machine learning sensitivity analysis.
 ### Monotone Bart
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
 library(MASS)
 set.seed(0)
 N <- 500 # Number of random samples
@@ -70,9 +62,9 @@ dataset%>%
   theme(plot.title = element_text(hjust = 0.5,size=16))
 
 
-[Link](url) and ![Image](src)
-```
 
+```
+[Link](url) and ![Image](src)
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
 ### Integration
