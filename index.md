@@ -1,5 +1,10 @@
-<img src="{{site.baseurl}}/going_vs_bank_reg-1.png" width="200" height="200" />
-![going_vs_bank_reg-1.png]({{site.baseurl}}/going_vs_bank_reg-1.png )
+
+<div style="text-align: center">
+<a href="https://arxiv.org/pdf/2106.04503.pdf">
+<img src="{{site.baseurl}}/going_vs_bank_reg-1.png" height="200" /></a>
+</div>
+
+<!--![going_vs_bank_reg-1.png]({{site.baseurl}}/going_vs_bank_reg-1.png )-->
 ## Introduction and usage
 
 This code implements the methods from the paper **Do forecasts of bankruptcy cause bankruptcy? A machine learning sensitivity analysis.**, which can be found [here](https://arxiv.org/pdf/2106.04503.pdf).  The abstract of the paper is reproduced here:
