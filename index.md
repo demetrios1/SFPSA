@@ -86,4 +86,4 @@ geom_histogram(aes(y=..count../sum(..count..)),color='white',
 
 ### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Additional detail can be found [here](https://github.com/demetrios1/bankruptcy_sensitivity), where more codes and a supplemental file is available.  
