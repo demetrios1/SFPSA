@@ -1,9 +1,12 @@
+![going_vs_bank_reg-1.png]({{site.baseurl}}/going_vs_bank_reg-1.png)
 ## Introduction and usage
+
 This code implements the methods from the paper **Do forecasts of bankruptcy cause bankruptcy? A machine learning sensitivity analysis.**, which can be found [here](https://arxiv.org/pdf/2106.04503.pdf).  The abstract of the paper is reproduced here:
 
 > It is widely speculated that auditors’ public forecasts of bankruptcy are,at least in part, self-fulfilling prophecies in the sense that they might actuallycause bankruptcies that would not have otherwise occurred. This conjectureis hard to prove, however, because the strong association between bankrupt-cies and bankruptcy forecasts could simply indicate that auditors are skillfulforecasters with unique access to highly predictive covariates. In this paper,we investigate the causal effect of bankruptcy forecasts on bankruptcy usingnonparametric sensitivity analysis. We contrast our analysis with two alterna-tive approaches: a linear bivariate probit model with an endogenous regressor,and a recently developed bound on risk ratios called E-values. Additionally,our machine learning approach incorporates a monotonicity constraint corre-sponding to the assumption that bankruptcy forecasts do not make bankrupt-cies less likely. Finally, a tree-based posterior summary of the treatment effectestimates allows us to explore which observable firm characteristics moderatethe inducement effect.
 
 
+While the paper is focused on whether or not going concern opinions affect probability of bankruptcy, these methods are widely applicable to any setting with a binary treatment variable and a binary response variable (though the methods could also be extended to multinomial response as well).  
 
 
 ### Monotone Bart
@@ -86,4 +89,4 @@ geom_histogram(aes(y=..count../sum(..count..)),color='white',
 
 ### Support or Contact
 
-Additional detail can be found [here](https://github.com/demetrios1/bankruptcy_sensitivity), where more codes and a supplemental file is available.  
+Additional detail can be found [here](https://github.com/demetrios1/bankruptcy_sensitivity), where more codes and a supplemental file is available.
