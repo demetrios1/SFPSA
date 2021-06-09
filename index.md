@@ -1,3 +1,4 @@
+<img src="{{site.baseurl}}/going_vs_bank_reg-1.png" width="200" height="200" />
 ![going_vs_bank_reg-1.png]({{site.baseurl}}/going_vs_bank_reg-1.png =100x20)
 ## Introduction and usage
 
