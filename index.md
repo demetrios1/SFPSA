@@ -1,5 +1,11 @@
 ## Introduction and usage
-This code implements the methods from the paper Do forecasts of bankruptcy cause bankruptcy? A machine learning sensitivity analysis.
+This code implements the methods from the paper **Do forecasts of bankruptcy cause bankruptcy? A machine learning sensitivity analysis.**, which can be found [here](https://arxiv.org/pdf/2106.04503.pdf).  The abstract of the paper is reproduced here:
+
+> It is widely speculated that auditors’ public forecasts of bankruptcy are,at least in part, self-fulfilling prophecies in the sense that they might actuallycause bankruptcies that would not have otherwise occurred. This conjectureis hard to prove, however, because the strong association between bankrupt-cies and bankruptcy forecasts could simply indicate that auditors are skillfulforecasters with unique access to highly predictive covariates. In this paper,we investigate the causal effect of bankruptcy forecasts on bankruptcy usingnonparametric sensitivity analysis. We contrast our analysis with two alterna-tive approaches: a linear bivariate probit model with an endogenous regressor,and a recently developed bound on risk ratios called E-values. Additionally,our machine learning approach incorporates a monotonicity constraint corre-sponding to the assumption that bankruptcy forecasts do not make bankrupt-cies less likely. Finally, a tree-based posterior summary of the treatment effectestimates allows us to explore which observable firm characteristics moderatethe inducement effect.
+
+
+
+
 ### Monotone Bart
 ```markdown
 library(foreach)
@@ -41,17 +47,25 @@ print(table(G,B))
 covariates=data.frame(x1,x2,x3,x4,x5,B, G)
 vars=c('x1','x2','x3','x4','x5')
 intframe=BARTpred(covariates, treat='G', Outcome='B',vars, mono=T)
+```
+
+### Integration
+This is the code for the integration.  Right now, you can use bart, monotone bart, or random forest, although more models will likely be added.  We also have a balanced cross-validation function for the monotone bart and bart model.  
+
+This integration takes a mean of the posterior draws and uses that as the passed probability for each obvservation in the integration optimization step.  One could also optimize the entire dataset for all the posterior draws of the joint probabilities of treatment/outcome for each observation.  However, doing so is quite the computational strain, so we do not currently include this feature. 
+
+```markdown
 #pick a function to integrate over
 #here the standard deviation is chosen to match the generated data
 sd_chosen = sqrt(rho/(1-rho))
 f=function(u){
-dnorm(u, mean=0, sd = 1) #for the time being, this has to be done as a number not a variable
+dnorm(u, mean=0, sd = sd_chosen) #for the time being, this has to be done as a number not a variable
 }
 treat_frame=integrate_function(intframe, constraint=T, f=f, n_cores=1, lambda=0)
 library(rpart)
 #merge the irds and covariates
 dataset=data.frame(covariates, diff=treat_frame[, 'diff'])
-tree_fit<-rpart(diff~x1+x2+x3+x4+x5,data=dataset, minucket=100)
+tree_fit<-rpart(diff~x1+x2+x3+x4+x5,data=dataset, minbucket=100)
 rpart.plot::rpart.plot(tree_fit)
 ####Optional, if you want to make a quick histogram of IRD's
 library(tidyverse)
@@ -68,14 +82,7 @@ geom_histogram(aes(y=..count../sum(..count..)),color='white',
 
 ```
 
-[Link](url) and ![Image](src)
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Integration
-This is the code for the integration.  Right now, you can use bart, monotone bart, or random forest, although more models will likely be added.  We also have a balanced cross-validation function for the monotone bart and bart model.  
-
-This integration takes a mean of the posterior draws and uses that as the passed probability for each obvservation in the integration optimization step.  One could also optimize the entire dataset for all the posterior draws of the joint probabilities of treatment/outcome for each observation.  However, doing so is quite the computational strain, so we do not currently include this feature. 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/demetrios1/Causallysensitive/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
 ### Support or Contact
 
