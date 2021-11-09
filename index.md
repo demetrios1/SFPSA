@@ -2,6 +2,8 @@
 <div style="text-align: center">
 <a href="https://arxiv.org/pdf/2106.04503.pdf">
 <img src="{{site.baseurl}}/going_vs_bank_newvar.png" height="200" /></a>
+  <a href="https://arxiv.org/pdf/2106.04503.pdf">
+<img src="{{site.baseurl}}/going_vs_bank_newvar_hist.png" height="200" /></a>
 </div>
 
 <!--![going_vs_bank_reg-1.png]({{site.baseurl}}/going_vs_bank_reg-1.png )-->
