@@ -1,10 +1,6 @@
 
 <div style="text-align: center">
-<a href="https://arxiv.org/abs/2106.04503">
-<img src="{{site.baseurl}}/going_vs_bank_newvar_hist.png" height="200" /></a>
-</div>
-<div style="text-align: center">
-<a href="https://arxiv.org/abs/2106.04503">
+<a href="https://arxiv.org/pdf/2106.04503.pdf">
 <img src="{{site.baseurl}}/going_vs_bank_newvar.png" height="200" /></a>
 </div>
 
