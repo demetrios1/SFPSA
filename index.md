@@ -19,18 +19,14 @@ While the paper is focused on whether or not going concern opinions affect proba
 
 ### Monotone Bart
 ```markdown
-library(foreach)
-library(bcf)
-library(fastbart)
-library(dbarts)
-library(foreach)
-library(doParallel)
-#Set a seed and generate data from the bivariate probit
-library(MASS)
+## install.packages("devtools")
+#devtools::install_github("jaredsmurray/monbart", ref='main')
+#devtools::install_github("demetrios1/SFPSA", ref="main")
+
+library(SFPSA)
 set.seed(0)
 N <- 500 # Number of random samples
 a=1
-
 x1=runif(N, -a,a)
 x2=runif(N, -a,a)
 x3=runif(N,-a,a)
@@ -48,7 +44,7 @@ gamma=1
 B1.true=pnorm(mu2+gamma)
 B0.true=pnorm(mu2)
 sigma <- matrix(c(1, rho,rho,1),
-               2) # Covariance matrix
+                2) # Covariance matrix
 sim_data=t(sapply(1:N, function(i)mvrnorm(1, mu = mu[i,], Sigma = sigma )))
 #generate the binary treatments
 G=sapply(1:N, function(i)ifelse(sim_data[i,1]>=0, 1,0))
@@ -70,28 +66,31 @@ This integration takes a mean of the posterior draws and uses that as the passed
 #here the standard deviation is chosen to match the generated data
 sd_chosen = sqrt(rho/(1-rho))
 f=function(u){
-dnorm(u, mean=0, sd = sd_chosen) #for the time being, this has to be done as a number not a variable
+  dnorm(u, mean=0, sd = sd_chosen) #for the time being, this has to be done as a number not a variable
 }
 treat_frame=integrate_function(intframe, constraint=T, f=f, n_cores=1, lambda=0)
 library(rpart)
+
+covariates <- data.frame(x1,x2,x3,x4,x5)
 #merge the irds and covariates
-dataset=data.frame(covariates, diff=treat_frame[, 'diff'])
+dataset=data.frame(covariates, diff=treat_frame[, 'B1']-treat_frame[, 'B0'])
 tree_fit<-rpart(diff~x1+x2+x3+x4+x5,data=dataset, minbucket=100)
 rpart.plot::rpart.plot(tree_fit)
 ####Optional, if you want to make a quick histogram of IRD's
 library(tidyverse)
 library(dplyr)
 dataset%>%
-ggplot(aes(x=diff))+
-geom_histogram(aes(y=..count../sum(..count..)),color='white',
-               fill='black')+
-               ggtitle('All observations')+
-               ylab('Density')+xlab('Individual Risk Differences')+
-               xlim(0,.50)+theme_minimal(base_size = 16)+
-               theme(plot.title = element_text(hjust = 0.5,size=16))
-
+  ggplot(aes(x=diff))+
+  geom_histogram(aes(y=..count../sum(..count..))
+                 ,color='white'
+                 ,fill='#1d2951', bins=25)+
+  ggtitle('All observations')+
+  ylab('Density')+xlab('Individual Risk Differences')+
+  xlim(0,.50)+theme_minimal(base_size = 16)+
+  theme(plot.title = element_text(hjust = 0.5,size=16))
 
 ```
+
 
 
 
