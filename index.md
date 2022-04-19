@@ -68,7 +68,8 @@ sd_chosen = sqrt(rho/(1-rho))
 f=function(u){
   dnorm(u, mean=0, sd = sd_chosen) #for the time being, this has to be done as a number not a variable
 }
-treat_frame=integrate_function(intframe, constraint=T, f=f, n_cores=1, lambda=0)
+ncores <- detectCores() - 1
+treat_frame=integrate_function(intframe, constraint=T, f=f, n_cores=ncores, lambda=0)
 library(rpart)
 
 covariates <- data.frame(x1,x2,x3,x4,x5)
