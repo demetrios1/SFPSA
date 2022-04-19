@@ -1,8 +1,6 @@
-
-  #' imported packages
-  #' @import foreach doParallel dbarts bcf monbart
-  #' @import pROC truncnorm dplyr ggplot2 gridExtra caret colorspace
-  NULL
+#' @import foreach doParallel dbarts bcf monbart
+#' @import dplyr ggplot2 caret
+NULL
 
 
 
@@ -17,7 +15,6 @@
 #' @param nskip Number of burn in draws
 #' @param ndpost Number of posterior draws we keep
 #' @param m Number of trees
-#' @param n  Number of observations
 #' @keywords BART
 #' @export
 #' @examples
@@ -100,8 +97,8 @@ monotone_bart_function = function(y, z, x, xpred, nskip=5000, ndpost=5000, m = 5
 #' a=(1-(dnorm(0)/(1-pnorm(0)))^2)
 #' b=((dnorm(0)/(1-pnorm(0))))
 #' sig=sqrt(var/((1-q)*a*((1-q)/q)^2 + q*a + (b*(1 + (1-q)/q))^2*q*(1-q)))
-#' u[ind==1] = rtruncnorm(sum(ind==1),a = -Inf, b = 0, sd = sig)
-#' u[ind==0] = rtruncnorm(sum(ind==0),a = 0, b = +Inf,sd = sig*(1-q)/q)  #prob 1-q over 0, 1/s and s cancel
+#' u[ind==1] = truncnorm::rtruncnorm(sum(ind==1),a = -Inf, b = 0, sd = sig)
+#' u[ind==0] = truncnorm::rtruncnorm(sum(ind==0),a = 0, b = +Inf,sd = sig*(1-q)/q)  #prob 1-q over 0, 1/s and s cancel
 #'plot(density(u), lwd=2)
 #'lines(xgrid, shark_fin(xgrid, q, var), type='l', lwd=2, col='firebrick4')
 
@@ -571,11 +568,11 @@ BARTpred_CV=function(df, treat='G', Outcome='B',vars,mono=T, nd_post=20, n_skip=
   }
 
 
-BG1_mbart=auc(imp_frame[[cv]][Outcome][imp_frame[[cv]][treat]==1],
+BG1_mbart=pROC::auc(imp_frame[[cv]][Outcome][imp_frame[[cv]][treat]==1],
               imp_frame[[cv]]$BG1[imp_frame[[cv]][treat]==1])
-BG0_mbart=auc(imp_frame[[cv]][Outcome][imp_frame[[cv]][treat]==0],
+BG0_mbart=pROC::auc(imp_frame[[cv]][Outcome][imp_frame[[cv]][treat]==0],
               imp_frame[[cv]]$BG0[imp_frame[[cv]][treat]==0])
-G1_mbart=auc(unlist(imp_frame[[cv]][treat]),
+G1_mbart=pROC::auc(unlist(imp_frame[[cv]][treat]),
               imp_frame[[cv]]$G1)
 cat(paste0('AUC for BG1 ',round(BG1_mbart[1],3), ' For cv run', cv ))
 cat(paste0('AUC for BG0 ',round(BG0_mbart[1],3), ' For cv run', cv ))
@@ -648,7 +645,7 @@ ggrocs <- function(rocs, breaks = seq(0,1,0.1), tittle = "Fit Model") {
     # auc_table <- unique(RocVals[, c("trials", "auc")])
     #  df.table <- gridExtra::tableGrob(auc_table, theme = gridExtra::ttheme_default(base_size = 8), rows = NULL)
     # Plot chart and table into one object
-    return(grid.arrange(rocPlot,# df.table,
+    return(gridExtra::grid.arrange(rocPlot,# df.table,
                         ncol=2,
                         as.table=TRUE,
                         widths=c(8,1)))
