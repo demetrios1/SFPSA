@@ -1,5 +1,5 @@
 # SFPSA: Self Fulfilling Prophecy Sensitivity Analysis
-An R-package that allows users to implement the methods of **DO FORECASTS OF BANKRUPTCY CAUSE BANKRUPTCY?A MACHINE LEARNING SENSITIVITY ANALYSIS.** The github repo for that paper can be found [here](https://github.com/demetrios1/bankruptcy_sensitivity), with the arxiv link [here](https://arxiv.org/abs/2106.04503).  Go [here](https://demetrios1.github.io/SFPSA/) for the vignette.
+An R-package that allows users to implement the methods of [**DO FORECASTS OF BANKRUPTCY CAUSE BANKRUPTCY?A MACHINE LEARNING SENSITIVITY ANALYSIS.**](https://arxiv.org/abs/2106.04503). The github repo for that paper can be found [here](https://github.com/demetrios1/bankruptcy_sensitivity), with the arxiv link.  Go [here](https://demetrios1.github.io/SFPSA/) for the vignette.
 
 How to get started.  
 The first thing you want to  do is 
