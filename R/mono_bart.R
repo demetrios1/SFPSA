@@ -26,7 +26,7 @@
 set.seed(12296)
 
 
-monotone_bart = function(y, z, x, xpred, nskip=5000, ndpost=5000, m = 50, n=N) {
+monotone_bart = function(y, z, x, xpred, nskip=5000, ndpost=5000, m = 50) {
 
   sort_ix = order(z, y)
   x = x[sort_ix,]
