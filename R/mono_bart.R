@@ -9,7 +9,7 @@
 #' Monotone Bart
 #'
 #' Implements bart with a monotonicity constraint, i.e. $b_1(x)> b_0(x)$
-#' @name monotone_bart
+#' @name monotone_bart_function
 #' @param y observed outputs
 #' @param z 1 if y==0, 0 o.w.
 #' @param x Dataframe of covariates
@@ -21,12 +21,12 @@
 #' @keywords BART
 #' @export
 #' @examples
-#' monotone_bart()
+#' monotone_bart_function()
 
 set.seed(12296)
 
 
-monotone_bart = function(y, z, x, xpred, nskip=5000, ndpost=5000, m = 50) {
+monotone_bart_function = function(y, z, x, xpred, nskip=5000, ndpost=5000, m = 50) {
 
   sort_ix = order(z, y)
   x = x[sort_ix,]
@@ -206,7 +206,7 @@ BARTpred=function(df, treat='G', Outcome='B',vars, mono=T, nd_post=2000, n_skip=
 
     # mono fits
 
-    bart_mono = monotone_bart(y = as.numeric(c(ytrain1, ytrain0)==1),
+    bart_mono = monotone_bart_function(y = as.numeric(c(ytrain1, ytrain0)==1),
                               z = 1-c(rep(1, length(ytrain1)), rep(0, length(ytrain0))),
                               x = rbind(xtraintreat, xtraincontrol),
                               xpred = xtest, nskip = n_skip, ndpost = nd_post,m=100)
@@ -510,7 +510,7 @@ BARTpred_CV=function(df, treat='G', Outcome='B',vars,mono=T, nd_post=20, n_skip=
     x_train_0<-sapply(x_train_0, as.numeric)
     x_train_1<-sapply(x_train_1, as.numeric)
   if(mono==T){
-    bart_mono = monotone_bart(y = as.numeric(c(y_train1[[cv]], y_train0[[cv]])==1),
+    bart_mono = monotone_bart_function(y = as.numeric(c(y_train1[[cv]], y_train0[[cv]])==1),
                               z = 1-c(rep(1, length(y_train1[[cv]])),
                                       rep(0, length(y_train0[[cv]]))),
                               x = rbind(x_train_1, x_train_0),
