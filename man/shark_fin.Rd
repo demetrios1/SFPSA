@@ -31,8 +31,8 @@ plot(xgrid,shark_fin(xgrid, q, var), type='l', lwd=2,col='firebrick4',
 a=(1-(dnorm(0)/(1-pnorm(0)))^2)
 b=((dnorm(0)/(1-pnorm(0))))
 sig=sqrt(var/((1-q)*a*((1-q)/q)^2 + q*a + (b*(1 + (1-q)/q))^2*q*(1-q)))
-u[ind==1] = rtruncnorm(sum(ind==1),a = -Inf, b = 0, sd = sig)
-u[ind==0] = rtruncnorm(sum(ind==0),a = 0, b = +Inf,sd = sig*(1-q)/q)  #prob 1-q over 0, 1/s and s cancel
+u[ind==1] = truncnorm::rtruncnorm(sum(ind==1),a = -Inf, b = 0, sd = sig)
+u[ind==0] = truncnorm::rtruncnorm(sum(ind==0),a = 0, b = +Inf,sd = sig*(1-q)/q)  #prob 1-q over 0, 1/s and s cancel
 plot(density(u), lwd=2)
 lines(xgrid, shark_fin(xgrid, q, var), type='l', lwd=2, col='firebrick4')
 }

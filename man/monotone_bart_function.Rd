@@ -17,8 +17,6 @@
 \item{ndpost}{Number of posterior draws we keep}
 
 \item{m}{Number of trees}
-
-\item{n}{Number of observations}
 }
 \description{
 Implements bart with a monotonicity constraint, i.e. $b_1(x)> b_0(x)$
