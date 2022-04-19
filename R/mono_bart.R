@@ -32,7 +32,7 @@ monotone_bart = function(y, z, x, xpred, nskip=5000, ndpost=5000, m = 50, n=N) {
   x = x[sort_ix,]
   z = z[sort_ix]
   y = y[sort_ix]
-
+  n = nrow(x)
   n0 = sum(z==0)
   n00 = sum(z==0 & y==0)
   yobs = y
