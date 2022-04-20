@@ -24,6 +24,7 @@ While the paper is focused on whether or not going concern opinions affect proba
 #devtools::install_github("demetrios1/SFPSA", ref="main")
 
 library(SFPSA)
+SFPSA::load.packages()
 set.seed(0)
 N <- 500 # Number of random samples
 a=1
@@ -45,7 +46,7 @@ B1.true=pnorm(mu2+gamma)
 B0.true=pnorm(mu2)
 sigma <- matrix(c(1, rho,rho,1),
                 2) # Covariance matrix
-sim_data=t(sapply(1:N, function(i)mvrnorm(1, mu = mu[i,], Sigma = sigma )))
+sim_data=t(sapply(1:N, function(i)MASS::mvrnorm(1, mu = mu[i,], Sigma = sigma )))
 #generate the binary treatments
 G=sapply(1:N, function(i)ifelse(sim_data[i,1]>=0, 1,0))
 #generate the binary outcomes
