@@ -20,6 +20,8 @@
 }
 \description{
 Implements bart with a monotonicity constraint, i.e. $b_1(x)> b_0(x)$
+However, the monbart package does that natively so this is deprecated
+It is still here if anyone wants to see the source code
 }
 \examples{
 monotone_bart_function()
