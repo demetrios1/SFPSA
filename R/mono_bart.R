@@ -262,6 +262,22 @@ BARTpred=function(df, treat='G', Outcome='B',vars, mono=T, nd_post=2000, n_skip=
 }
 
 
+#' Fit A tree
+#' @name fit_tree
+#' @param df Our integrals
+#' @param minbucket How deep the tree is, larger is smaller depth of tree
+#' @kewywords CART
+#' @export
+#' @examples
+#' #Follow the documentation example in test_healthdata.R
+fit_tree <- function(df, minbucket ){
+  factors <- colnames(df)[1:(ncol(df)-1)]
+  formula_vars <- as.formula(paste("outcome~", paste(factors, collapse="+")))
+  tree_fit<-rpart::rpart(formula_vars,data=df, minbucket=500)
+  rpart.plot::rpart.plot(tree_fit)
+}
+
+
 #' A helper function.  Allows you to fit observed joint probabilities with linear model, or with a monotonicity constraint
 #' also have an option for random forest
 #'
