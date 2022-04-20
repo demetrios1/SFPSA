@@ -1,12 +1,19 @@
-#' @import foreach doParallel dbarts bcf monbart
-#' @import dplyr ggplot2 caret
-NULL
-
-
+#' load required packages
+#' @name load.package
+#' @description to load the required R package for TwoStageVS
+#' @export
+load.package = function() {
+  library(dbarts)
+  library(foreach)
+  library(doParallel)
+  library(dplyr)
+}
 
 #' Monotone Bart
 #'
 #' Implements bart with a monotonicity constraint, i.e. $b_1(x)> b_0(x)$
+#' However, the monbart package does that natively so this is deprecated
+#' It is still here if anyone wants to see the source code
 #' @name monotone_bart_function
 #' @param y observed outputs
 #' @param z 1 if y==0, 0 o.w.
@@ -54,7 +61,7 @@ monotone_bart_function = function(y, z, x, xpred, nskip=5000, ndpost=5000, m = 5
 
 
   xi = lapply(1:ncol(x), function(i) bcf:::.cp_quantile(x[,i]))
-  fit.mono = bartRcppMono(yobs, zz, t(as.matrix(x)), t(xpred),
+  fit.mono = monbart::bartRcppMono(yobs, zz, t(as.matrix(x)), t(xpred),
                           yobs0, z0, t(as.matrix(x)),t(xpred),
                           n00,
                           xi,
@@ -203,7 +210,7 @@ BARTpred=function(df, treat='G', Outcome='B',vars, mono=T, nd_post=2000, n_skip=
 
     # mono fits
 
-    bart_mono = monotone_bart_function(y = as.numeric(c(ytrain1, ytrain0)==1),
+    bart_mono = monotone_bart(y = as.numeric(c(ytrain1, ytrain0)==1),
                               z = 1-c(rep(1, length(ytrain1)), rep(0, length(ytrain0))),
                               x = rbind(xtraintreat, xtraincontrol),
                               xpred = xtest, nskip = n_skip, ndpost = nd_post,m=100)
@@ -507,7 +514,7 @@ BARTpred_CV=function(df, treat='G', Outcome='B',vars,mono=T, nd_post=20, n_skip=
     x_train_0<-sapply(x_train_0, as.numeric)
     x_train_1<-sapply(x_train_1, as.numeric)
   if(mono==T){
-    bart_mono = monotone_bart_function(y = as.numeric(c(y_train1[[cv]], y_train0[[cv]])==1),
+    bart_mono = monotone_bart(y = as.numeric(c(y_train1[[cv]], y_train0[[cv]])==1),
                               z = 1-c(rep(1, length(y_train1[[cv]])),
                                       rep(0, length(y_train0[[cv]]))),
                               x = rbind(x_train_1, x_train_0),
@@ -587,7 +594,7 @@ cat(paste0('AUC for G1 ',round(G1_mbart[1],3), ' For cv run', cv ))
               true_test_1=unlist(y_test1),
               pred1=unlist(pred1),
               pred2=unlist(pred2),
-              imp_frame=sapply(1:5, function(cv)list(imp_frame[[cv]]))
+              imp_frame=sapply(1:fold, function(cv)list(imp_frame[[cv]]))
   ))
 }
 
@@ -626,7 +633,7 @@ ggrocs <- function(rocs, breaks = seq(0,1,0.1), tittle = "Fit Model") {
     })
 
 
-    rocPlot <- ggplot(RocVals, aes(x = fpr, y = tpr, colour = trials)) +
+    rocPlot <- ggplot2::ggplot(RocVals, aes(x = fpr, y = tpr, colour = trials)) +
       scale_color_manual(values=c('dodgerblue4', 'firebrick4', 'darkgreen'))+
       #scale_colour_viridis(discrete = TRUE)+
       geom_line(size = 1.5, alpha = 0.4) +
@@ -651,3 +658,6 @@ ggrocs <- function(rocs, breaks = seq(0,1,0.1), tittle = "Fit Model") {
                         widths=c(8,1)))
   }
 }
+
+
+
