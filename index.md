@@ -24,7 +24,7 @@ While the paper is focused on whether or not going concern opinions affect proba
 #devtools::install_github("demetrios1/SFPSA", ref="main")
 
 library(SFPSA)
-SFPSA::load.packages()
+SFPSA::load.package()
 set.seed(0)
 N <- 500 # Number of random samples
 a=1
