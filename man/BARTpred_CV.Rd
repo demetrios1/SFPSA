@@ -68,11 +68,11 @@ vars=c('x1','x2','x3','x4','x5')
 CV_pred=BARTpred_CV(covariates, treat='G', Outcome='B', vars=vars,mono=T,
  nd_post=200, n_skip=500, nfold=5)
 output=do.call('rbind', CV_pred$imp_frame)
-cc=ggrocs(list(PB1G0=roc(output$B[output$G==0],
+cc=ggrocs(list(PB1G0=pROC::roc(output$B[output$G==0],
                    output$BG0[output$G==0]),
-              PB1G1=roc(output$B[output$G==1],
+              PB1G1=pROC::roc(output$B[output$G==1],
                         output$BG1[output$G==1]),
-              PG1=roc(output$G[],
+              PG1=pROC::roc(output$G[],
                         output$G1)),
          breaks = seq(0,1,0.1),
          tittle = "ROC perf. predicting our probs")

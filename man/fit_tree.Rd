@@ -15,5 +15,5 @@ fit_tree(df, minbucket)
 Fit A tree
 }
 \examples{
-
+#Follow the documentation example in test_healthdata.R
 }
