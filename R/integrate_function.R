@@ -86,7 +86,6 @@ integrate_function=function(intframe, constraint=T, f=f, n_cores=n_cores, lambda
   newoutcome=as.matrix(intframe)
 
   ptm = proc.time()
-
   mBG_out = foreach( i = 1:dim(newoutcome)[1],  .combine=rbind )%dopar%{
     #better global definition.
     optimdist=function(vals){
