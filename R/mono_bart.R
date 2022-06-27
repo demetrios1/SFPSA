@@ -273,7 +273,7 @@ BARTpred=function(df, treat='G', Outcome='B',vars, mono=T, nd_post=2000, n_skip=
 fit_tree <- function(df, minbucket ){
   factors <- colnames(df)[1:(ncol(df)-1)]
   formula_vars <- as.formula(paste("outcome~", paste(factors, collapse="+")))
-  tree_fit<-rpart::rpart(formula_vars,data=df, minbucket=500)
+  tree_fit<-rpart::rpart(formula_vars,data=df, minbucket=minbucket)
   rpart.plot::rpart.plot(tree_fit)
 }
 
