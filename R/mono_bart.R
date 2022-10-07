@@ -210,7 +210,7 @@ BARTpred=function(df, treat='G', Outcome='B',vars, mono=T, nd_post=2000, n_skip=
 
     # mono fits
 
-    bart_mono = monotone_bart(y = as.numeric(c(ytrain1, ytrain0)==1),
+    bart_mono = monbart::monotone_bart(y = as.numeric(c(ytrain1, ytrain0)==1),
                               z = 1-c(rep(1, length(ytrain1)), rep(0, length(ytrain0))),
                               x = rbind(xtraintreat, xtraincontrol),
                               xpred = xtest, nskip = n_skip, ndpost = nd_post,m=100)
