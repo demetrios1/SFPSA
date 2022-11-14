@@ -194,7 +194,7 @@ integrate_function=function(intframe, constraint=T, f=f, n_cores=n_cores, lambda
       return( out)
     }
   }
-  head(mBG_out)
+
   print( proc.time() - ptm )
 
   colnames(mBG_out) = c( "b1", "b0", "g", "tau", "convergence", "fnvalue" ,'B1','B0')
