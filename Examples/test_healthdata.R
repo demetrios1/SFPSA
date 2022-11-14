@@ -48,9 +48,9 @@ intframe=SFPSA::BARTpred(Wage4, treat='health_ins', Outcome='healthy',
 pROC::auc( Wage4$health_ins, intframe$propensity)
 #intframe=prediction_function(Wage4, treat='health_ins', Outcome='healthy',vars)
 #sd_chosen = sqrt(rho/(1-rho))
-sd_chosen = .2
+sd_chosen = .25
 f=function(u){
-  dnorm(u, mean=0, sd = sd_chosen) #for the time being, this has to be done as a number not a variable
+  dnorm(u, mean=0, sd = 0.25) #for the time being, this has to be done as a number not a variable
 }
 treat_frame=integrate_function(intframe, constraint=T, f=f, n_cores=detectCores()-1, lambda=0)
 head(treat_frame)
