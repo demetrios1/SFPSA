@@ -67,7 +67,7 @@ This integration takes a mean of the posterior draws and uses that as the passed
 #here the standard deviation is chosen to match the generated data
 sd_chosen = sqrt(rho/(1-rho))
 f=function(u){
-  dnorm(u, mean=0, sd = sd_chosen) #for the time being, this has to be done as a number not a variable
+  dnorm(u, mean=0, sd = 1) #for the time being, this has to be done as a number not a variable
 }
 ncores <- detectCores() - 1
 treat_frame=integrate_function(intframe, constraint=T, f=f, n_cores=ncores, lambda=0)
